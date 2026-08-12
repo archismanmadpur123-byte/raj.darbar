@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raj Darbar — Biryani, Balasore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1B0E0A;
+    --bg-soft:#241209;
+    --ink:#FBF1E4;
+    --ink-dim:#C9AF9A;
+    --spice1:#FF5A1F;
+    --spice2:#FFC53D;
+    --chili:#E8351F;
+    --leaf:#7CB342;
+    --card:#2A150C;
+    --line:rgba(251,241,228,0.1);
+    --radius:18px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'DM Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .display{ font-family:'Fraunces', serif; font-weight:800; letter-spacing:-0.5px; }
+  a{color:inherit; text-decoration:none;}
+
+  .glow{ position:fixed; border-radius:50%; filter:blur(100px); z-index:0; pointer-events:none; opacity:0.28; }
+  .glow1{ width:440px; height:440px; background:var(--spice1); top:-140px; right:-120px; }
+  .glow2{ width:380px; height:380px; background:var(--spice2); bottom:8%; left:-160px; opacity:0.16; }
+
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(27,14,10,0.8); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-wrap{ max-width:1100px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; }
+  .logo{ font-family:'Fraunces', serif; font-weight:800; font-size:1.2rem; }
+  .logo span{ color:var(--spice2); }
+  .nav-cta{
+    background:linear-gradient(90deg,var(--spice1),var(--spice2));
+    color:#1B0E0A; font-weight:700; font-size:0.85rem;
+    padding:9px 16px; border-radius:100px; display:flex; align-items:center; gap:6px;
+  }
+
+  .hero{ position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:60px 20px 40px; }
+  .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--card); border:1px solid var(--line);
+    padding:7px 14px; border-radius:100px; font-size:0.8rem; color:var(--ink-dim); margin-bottom:22px;
+  }
+  .badge b{ color:var(--ink); }
+  .hero h1{ font-size:clamp(2.4rem, 8vw, 4.2rem); line-height:1.02; font-style:italic; }
+  .hero h1 .grad{
+    background:linear-gradient(90deg,var(--spice1),var(--spice2));
+    -webkit-background-clip:text; background-clip:text; color:transparent; font-style:normal;
+  }
+  .hero p{ color:var(--ink-dim); font-size:1.05rem; max-width:480px; margin:18px 0 28px; }
+  .hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:36px; }
+  .btn{ padding:14px 24px; border-radius:100px; font-weight:700; font-size:0.95rem; display:inline-flex; align-items:center; gap:8px; border:1px solid transparent; cursor:pointer; }
+  .btn-primary{ background:linear-gradient(90deg,var(--spice1),var(--spice2)); color:#1B0E0A; }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink); }
+  .btn:active{ transform:scale(0.97); }
+
+  .rating-strip{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; border-top:1px solid var(--line); padding-top:22px; }
+  .rating-num{ font-family:'Fraunces', serif; font-weight:800; font-size:2.4rem; line-height:1; }
+  .rating-sub{ font-size:0.8rem; color:var(--ink-dim); }
+  .chilis{ font-size:1.1rem; letter-spacing:2px; }
+
+  section{ position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:56px 20px; }
+  .eyebrow{ font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; color:var(--spice2); font-weight:700; margin-bottom:10px; }
+  .sec-title{ font-family:'Fraunces', serif; font-weight:800; font-size:clamp(1.6rem,4.5vw,2.3rem); margin-bottom:26px; max-width:600px; }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(210px,1fr)); gap:14px; }
+  .info-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px; display:grid; gap:16px; grid-template-columns:1fr;
+  }
+  @media(min-width:700px){ .info-card{ grid-template-columns:1fr 1fr; } }
+  .info-row{ display:flex; gap:12px; align-items:flex-start; }
+  .info-row .ic{ font-size:1.2rem; }
+  .info-row h4{ font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:var(--ink-dim); margin-bottom:4px; }
+  .info-row p{ font-size:0.95rem; }
+
+  .menu-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:22px;
+  }
+  .menu-card h3{ font-family:'Fraunces', serif; font-weight:800; font-size:1.15rem; margin-bottom:8px; }
+  .menu-card p{ font-size:0.88rem; color:var(--ink-dim); line-height:1.5; }
+  .price-tag{ display:inline-block; margin-top:12px; background:var(--bg-soft); border:1px solid var(--line); padding:5px 12px; border-radius:100px; font-size:0.8rem; color:var(--spice2); font-weight:600; }
+
+  .rev-summary{
+    display:flex; gap:26px; align-items:center; margin-bottom:30px; flex-wrap:wrap;
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:24px;
+  }
+  .rev-avg{ text-align:center; }
+  .rev-avg .n{ font-family:'Fraunces', serif; font-weight:800; font-size:3rem; }
+  .rev-bars{ flex:1; min-width:180px; display:grid; gap:6px; }
+  .bar-row{ display:flex; align-items:center; gap:8px; font-size:0.75rem; color:var(--ink-dim); }
+  .bar-track{ flex:1; height:6px; background:#3A2013; border-radius:100px; overflow:hidden; }
+  .bar-fill{ height:100%; background:linear-gradient(90deg,var(--spice1),var(--spice2)); border-radius:100px; }
+
+  .rev-list{ display:grid; gap:12px; margin-bottom:36px; }
+  .rev-card{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; }
+  .rev-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:10px; }
+  .rev-name{ font-weight:700; font-size:0.95rem; }
+  .rev-time{ font-size:0.75rem; color:var(--ink-dim); }
+  .rev-chilis{ font-size:0.9rem; margin-bottom:6px; }
+  .rev-text{ font-size:0.9rem; color:#E5D5C5; line-height:1.5; }
+  .new-tag{ font-size:0.65rem; background:var(--leaf); color:#12200A; padding:2px 8px; border-radius:100px; font-weight:700; }
+  .you-tag{ font-size:0.65rem; background:var(--spice2); color:#1B0E0A; padding:2px 8px; border-radius:100px; font-weight:700; }
+
+  .form-card{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:26px; }
+  .form-card h3{ font-family:'Fraunces', serif; font-weight:800; font-size:1.2rem; margin-bottom:6px; }
+  .form-card > p{ color:var(--ink-dim); font-size:0.85rem; margin-bottom:20px; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:1px; color:var(--ink-dim); margin-bottom:8px; }
+  .field input, .field textarea{
+    width:100%; background:#170B07; border:1px solid var(--line); border-radius:12px;
+    color:var(--ink); padding:12px 14px; font-family:inherit; font-size:0.95rem;
+  }
+  .field textarea{ resize:vertical; min-height:90px; }
+  .field input:focus, .field textarea:focus{ outline:2px solid var(--spice2); outline-offset:1px; }
+  .chili-picker{ display:flex; gap:8px; }
+  .chili-picker button{
+    background:#170B07; border:1px solid var(--line); border-radius:12px; width:48px; height:48px;
+    font-size:1.3rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    filter:grayscale(1) opacity(0.4); transition:filter 0.15s, transform 0.15s, border-color 0.15s;
+  }
+  .chili-picker button.lit{ filter:grayscale(0) opacity(1); border-color:var(--chili); transform:scale(1.05); }
+  .chili-picker button:focus-visible{ outline:2px solid var(--spice2); outline-offset:2px; }
+  .form-msg{ font-size:0.85rem; margin-top:12px; min-height:1.2em; }
+  .form-msg.ok{ color:var(--leaf); }
+  .form-msg.err{ color:var(--chili); }
+  .local-note{ font-size:0.72rem; color:var(--ink-dim); margin-top:6px; }
+
+  footer{ position:relative; z-index:1; text-align:center; padding:40px 20px 60px; color:var(--ink-dim); font-size:0.8rem; border-top:1px solid var(--line); }
+  footer a{ color:var(--spice2); }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
+
+<header>
+  <div class="nav-wrap">
+    <div class="logo">Raj <span>Darbar</span></div>
+    <a class="nav-cta" href="https://www.google.com/maps/search/?api=1&query=Raj+Darbar+FM+College+Rd+Manikhamb+Balasore" target="_blank" rel="noopener">📍 Directions</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="badge">🌶️ <b id="hero-avg">3.5</b>&nbsp;rated · 33+ reviews · Balasore's biryani spot</div>
+  <h1 class="display">biryani that<br><span class="grad">actually slaps.</span></h1>
+  <p>Real spice, real portions, no shortcuts. FM College Road's go-to for biryani that doesn't play around.</p>
+  <div class="hero-ctas">
+    <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=Raj+Darbar+FM+College+Rd+Manikhamb+Balasore" target="_blank" rel="noopener">Get Directions</a>
+    <a class="btn btn-ghost" href="#reviews">See reviews</a>
+  </div>
+  <div class="rating-strip">
+    <div>
+      <div class="rating-num" id="strip-avg">3.5</div>
+      <div class="rating-sub"><span class="chilis" id="strip-chilis">🌶️🌶️🌶️🌶️</span></div>
+    </div>
+    <div>
+      <div class="rating-sub" id="strip-count">33 reviews</div>
+      <div class="rating-sub">₹1–200 per person</div>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="eyebrow">What we're known for</div>
+  <h2 class="sec-title">it's a biryani thing.</h2>
+  <div class="grid">
+    <div class="menu-card">
+      <h3>Signature Biryani</h3>
+      <p>Slow-cooked, packed with flavor, loaded portions. The reason people keep coming back.</p>
+      <span class="price-tag">₹1–200 / person</span>
+    </div>
+    <div class="menu-card">
+      <h3>Quick Bites</h3>
+      <p>In and out fast without waiting forever. Solid pick for a lunch break run.</p>
+      <span class="price-tag">Budget friendly</span>
+    </div>
+    <div class="menu-card">
+      <h3>Honest Portions</h3>
+      <p>Regulars talk about the owner's honesty and the staff being genuinely helpful.</p>
+      <span class="price-tag">Local favorite</span>
+    </div>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="eyebrow">Find us</div>
+  <h2 class="sec-title">pull up.</h2>
+  <div class="info-card">
+    <div class="info-row"><div class="ic">📍</div><div><h4>Location</h4><p>FM College Rd, Manikhamb, Balasore, Odisha 756001 · ~450 m away</p></div></div>
+    <div class="info-row"><div class="ic">🕚</div><div><h4>Hours</h4><p>Not listed yet — best to call ahead before you head over.</p></div></div>
+    <div class="info-row"><div class="ic">💸</div><div><h4>Price range</h4><p>₹1–200 per person</p></div></div>
+    <div class="info-row"><div class="ic">🗺️</div><div><h4>Directions</h4><p><a href="https://www.google.com/maps/search/?api=1&query=Raj+Darbar+FM+College+Rd+Manikhamb+Balasore" target="_blank" rel="noopener">Open in Google Maps →</a></p></div></div>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="eyebrow">The word on the street</div>
+  <h2 class="sec-title">reviews don't lie.</h2>
+
+  <div class="rev-summary">
+    <div class="rev-avg">
+      <div class="n" id="avg-num">3.5</div>
+      <div class="chilis" id="avg-chilis">🌶️🌶️🌶️🌶️</div>
+      <div class="rating-sub" id="avg-count">33 ratings</div>
+    </div>
+    <div class="rev-bars" id="bars"></div>
+  </div>
+
+  <div class="rev-list" id="rev-list">
+    <div style="color:var(--ink-dim); font-size:0.9rem;">Loading reviews…</div>
+  </div>
+
+  <div class="form-card">
+    <h3>Add your review</h3>
+    <p>Eaten here? Rate the spice level and let people know what to expect.</p>
+    <form id="rev-form">
+      <div class="field">
+        <label>Your name</label>
+        <input type="text" id="f-name" placeholder="e.g. Aditya P." maxlength="40" required>
+      </div>
+      <div class="field">
+        <label>Spice rating</label>
+        <div class="chili-picker" id="chili-picker">
+          <button type="button" data-val="1" aria-label="1 chili">🌶️</button>
+          <button type="button" data-val="2" aria-label="2 chilis">🌶️</button>
+          <button type="button" data-val="3" aria-label="3 chilis">🌶️</button>
+          <button type="button" data-val="4" aria-label="4 chilis">🌶️</button>
+          <button type="button" data-val="5" aria-label="5 chilis">🌶️</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Your review</label>
+        <textarea id="f-text" placeholder="How was the biryani, the service, the vibe?" maxlength="400" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Post review</button>
+      <div class="form-msg" id="form-msg"></div>
+      <div class="local-note">Saved only on this device/browser — clearing browser data will remove it.</div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  Raj Darbar · FM College Rd, Manikhamb, Balasore, Odisha 756001
+</footer>
+
+<script>
+(function(){
+  const BASE_COUNT = 33;
+  const BASE_AVG = 3.5;
+  const STORAGE_KEY = "raj_darbar_reviews";
+
+  const seedReviews = [
+    {name:"Debashish P.", rating:5, text:"Food quality was really good and the staff was polite throughout. Came back a second time within the week.", ts: Date.now()-1000*60*60*24*4},
+    {name:"Manisha R.", rating:5, text:"Best biryani I've had around here — and the owner was upfront and honest about everything, which you don't see often.", ts: Date.now()-1000*60*60*24*11},
+    {name:"Sourav T.", rating:2, text:"My order came without any chicken pieces in it. Pretty disappointing for the price, hoping it was a one-off.", ts: Date.now()-1000*60*60*24*22},
+  ];
+
+  function timeAgo(ts){
+    const s = Math.floor((Date.now()-ts)/1000);
+    const d = Math.floor(s/86400);
+    if(d<1) return "today";
+    if(d===1) return "1 day ago";
+    if(d<30) return d+" days ago";
+    const mo = Math.floor(d/30);
+    if(mo<12) return mo+" mo ago";
+    return Math.floor(mo/12)+" yr ago";
+  }
+
+  function chiliStr(n){
+    return "🌶️".repeat(n) + "<span style='opacity:0.25'>" + "🌶️".repeat(5-n) + "</span>";
+  }
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function renderBars(reviews){
+    const counts = [0,0,0,0,0,0];
+    reviews.forEach(r=>{ if(r.rating>=1 && r.rating<=5) counts[r.rating]++; });
+    const total = reviews.length || 1;
+    const el = document.getElementById('bars');
+    el.innerHTML = "";
+    for(let star=5; star>=1; star--){
+      const pct = Math.round((counts[star]/total)*100);
+      const row = document.createElement('div');
+      row.className = 'bar-row';
+      row.innerHTML = `<span style="width:14px;">${star}</span><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div><span style="width:32px; text-align:right;">${counts[star]}</span>`;
+      el.appendChild(row);
+    }
+  }
+
+  function renderReviews(reviews, userTsSet){
+    const sorted = [...reviews].sort((a,b)=>b.ts-a.ts);
+    const list = document.getElementById('rev-list');
+    list.innerHTML = "";
+    sorted.forEach(r=>{
+      const card = document.createElement('div');
+      card.className = 'rev-card';
+      const isMine = userTsSet && userTsSet.has(r.ts);
+      card.innerHTML = `
+        <div class="rev-top">
+          <span class="rev-name">${escapeHtml(r.name)} ${isMine ? '<span class="you-tag">YOU</span>' : ''}</span>
+          <span class="rev-time">${timeAgo(r.ts)}</span>
+        </div>
+        <div class="rev-chilis">${chiliStr(r.rating)}</div>
+        <div class="rev-text">${escapeHtml(r.text)}</div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  function updateAverages(userReviews){
+    const userSum = userReviews.reduce((a,r)=>a+r.rating,0);
+    const totalCount = BASE_COUNT + userReviews.length;
+    const totalSum = (BASE_AVG * BASE_COUNT) + userSum;
+    const avg = totalCount ? (totalSum/totalCount) : BASE_AVG;
+    const avgRounded = Math.round(avg*10)/10;
+    document.getElementById('avg-num').textContent = avgRounded.toFixed(1);
+    document.getElementById('avg-count').textContent = totalCount + " ratings";
+    document.getElementById('strip-avg').textContent = avgRounded.toFixed(1);
+    document.getElementById('hero-avg').textContent = avgRounded.toFixed(1);
+    document.getElementById('strip-count').textContent = totalCount + " reviews";
+    const chiliCount = Math.max(1, Math.round(avg));
+    document.getElementById('avg-chilis').innerHTML = chiliStr(chiliCount);
+    document.getElementById('strip-chilis').innerHTML = chiliStr(chiliCount);
+  }
+
+  function loadLocalReviews(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }catch(e){ return []; }
+  }
+
+  function saveLocalReviews(list){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  }
+
+  function refresh(){
+    const userReviews = loadLocalReviews();
+    const allReviews = [...seedReviews, ...userReviews];
+    const userTsSet = new Set(userReviews.map(r=>r.ts));
+    renderBars(allReviews);
+    renderReviews(allReviews, userTsSet);
+    updateAverages(userReviews);
+  }
+
+  // chili picker interaction
+  let selectedRating = 0;
+  const picker = document.getElementById('chili-picker');
+  picker.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      selectedRating = parseInt(btn.dataset.val, 10);
+      picker.querySelectorAll('button').forEach(b=>{
+        b.classList.toggle('lit', parseInt(b.dataset.val,10) <= selectedRating);
+      });
+    });
+  });
+
+  document.getElementById('rev-form').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const msg = document.getElementById('form-msg');
+    const name = document.getElementById('f-name').value.trim();
+    const text = document.getElementById('f-text').value.trim();
+    if(!selectedRating){
+      msg.textContent = "Pick a spice rating before posting.";
+      msg.className = "form-msg err";
+      return;
+    }
+    if(!name || !text){
+      msg.textContent = "Fill in your name and review.";
+      msg.className = "form-msg err";
+      return;
+    }
+    const review = { name, rating: selectedRating, text, ts: Date.now() };
+    try{
+      const existing = loadLocalReviews();
+      existing.push(review);
+      saveLocalReviews(existing);
+      refresh();
+      msg.textContent = "Posted. Thanks for the feedback! 🌶️";
+      msg.className = "form-msg ok";
+      document.getElementById('rev-form').reset();
+      selectedRating = 0;
+      picker.querySelectorAll('button').forEach(b=>b.classList.remove('lit'));
+    }catch(err){
+      msg.textContent = "Couldn't save right now — check your browser storage settings.";
+      msg.className = "form-msg err";
+    }
+  });
+
+  refresh();
+})();
+</script>
+
+</body>
+</html>
